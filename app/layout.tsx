@@ -1,17 +1,38 @@
-import { Geist, Geist_Mono, Outfit, Oxanium } from "next/font/google"
+import type { Metadata, Viewport } from "next"
+import { Geist, Geist_Mono, Newsreader } from "next/font/google"
+
+import { ThemeProvider } from "@/components/theme-provider"
+import { PHOTOGRAPHER } from "@/lib/portfolio-data"
+import { cn } from "@/lib/utils"
 
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
 
-const oxaniumHeading = Oxanium({subsets:['latin'],variable:'--font-heading'});
+const fontHeading = Newsreader({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  style: ["normal", "italic"],
+  variable: "--font-heading",
+})
 
-const outfit = Outfit({subsets:['latin'],variable:'--font-sans'})
+const fontSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 })
+
+export const metadata: Metadata = {
+  title: `${PHOTOGRAPHER.name} — Photography Portfolio`,
+  description:
+    "Portrait, architecture, and quiet documentary photography by Linnea Holm across Kyoto and Copenhagen. Selected plates, commission rates, and studio contact.",
+}
+
+export const viewport: Viewport = {
+  colorScheme: "light dark",
+}
 
 export default function RootLayout({
   children,
@@ -22,7 +43,12 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", outfit.variable, oxaniumHeading.variable)}
+      className={cn(
+        "antialiased",
+        fontSans.variable,
+        fontHeading.variable,
+        fontMono.variable
+      )}
     >
       <body>
         <ThemeProvider>{children}</ThemeProvider>
