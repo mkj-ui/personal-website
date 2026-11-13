@@ -1,0 +1,258 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  color-scheme: light;
+  --background: oklch(0.985 0.004 85);
+  --foreground: oklch(0.175 0.006 50);
+  --card: oklch(0.992 0.003 85);
+  --card-foreground: oklch(0.175 0.006 50);
+  --popover: oklch(0.992 0.003 85);
+  --popover-foreground: oklch(0.175 0.006 50);
+  --primary: oklch(0.45 0.115 38);
+  --primary-foreground: oklch(0.985 0.005 80);
+  --secondary: oklch(0.955 0.004 80);
+  --secondary-foreground: oklch(0.22 0.006 50);
+  --muted: oklch(0.955 0.004 80);
+  --muted-foreground: oklch(0.46 0.01 55);
+  --accent: oklch(0.945 0.006 80);
+  --accent-foreground: oklch(0.2 0.006 50);
+  --destructive: oklch(0.55 0.22 27);
+  --border: oklch(0.89 0.006 75);
+  --input: oklch(0.89 0.006 75);
+  --ring: oklch(0.52 0.02 50);
+  --radius: 0.25rem;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: oklch(0.145 0.005 50);
+  --foreground: oklch(0.945 0.005 80);
+  --card: oklch(0.185 0.006 50);
+  --card-foreground: oklch(0.945 0.005 80);
+  --popover: oklch(0.185 0.006 50);
+  --popover-foreground: oklch(0.945 0.005 80);
+  --primary: oklch(0.73 0.105 45);
+  --primary-foreground: oklch(0.15 0.005 50);
+  --secondary: oklch(0.22 0.006 50);
+  --secondary-foreground: oklch(0.945 0.005 80);
+  --muted: oklch(0.22 0.006 50);
+  --muted-foreground: oklch(0.715 0.01 60);
+  --accent: oklch(0.235 0.007 50);
+  --accent-foreground: oklch(0.945 0.005 80);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.66 0.015 60);
+}
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-heading);
+  --font-mono: var(--font-mono);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    line-height: 1.6;
+    text-align: start;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  :where(a:any-link, button, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+}
+
+.skip-link:where(:not(:focus-within, :active)) {
+  position: absolute !important;
+  clip-path: inset(50%) !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  white-space: nowrap !important;
+}
+
+.skip-link:focus-visible {
+  position: fixed;
+  inset-block-start: 0.75rem;
+  inset-inline-start: 0.75rem;
+  z-index: 60;
+  padding: 0.5rem 0.875rem;
+  background-color: var(--foreground);
+  color: var(--background);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+/* Responsive pricing table using @container queries */
+.pricing-table-region {
+  container-type: inline-size;
+  overflow-x: auto;
+  max-inline-size: 100%;
+}
+
+.pricing-table {
+  inline-size: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  --label-scope: "Scope";
+  --label-deliverables: "Deliverables";
+  --label-turnaround: "Turnaround";
+  --label-rate: "Rate";
+}
+
+@container (width < 640px) {
+  .pricing-table,
+  .pricing-table thead,
+  .pricing-table tbody,
+  .pricing-table tr,
+  .pricing-table th,
+  .pricing-table td {
+    display: block;
+  }
+
+  .pricing-table thead {
+    display: none;
+  }
+
+  .pricing-table tbody tr {
+    margin-block-end: 1rem;
+    border: 1px solid var(--border);
+    background-color: var(--card);
+    padding: 1rem;
+  }
+
+  .pricing-table tbody tr:last-child {
+    margin-block-end: 0;
+  }
+
+  .pricing-table tbody th {
+    padding: 0 0 0.75rem;
+    margin-block-end: 0.75rem;
+    border-block-end: 1px solid var(--border);
+    font-size: 1.0625rem;
+  }
+
+  .pricing-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.4375rem 0;
+    border: 0;
+    text-align: end;
+  }
+
+  .pricing-table tbody td::before {
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    text-align: start;
+    flex-shrink: 0;
+  }
+
+  .pricing-table tbody td:nth-child(2)::before {
+    content: var(--label-scope);
+  }
+
+  .pricing-table tbody td:nth-child(3)::before {
+    content: var(--label-deliverables);
+  }
+
+  .pricing-table tbody td:nth-child(4)::before {
+    content: var(--label-turnaround);
+  }
+
+  .pricing-table tbody td:nth-child(5)::before {
+    content: var(--label-rate);
+  }
+}
+
+/* Native top-layer lightbox dialog */
+dialog.lightbox-dialog {
+  margin: auto;
+  max-inline-size: min(92dvw, 68rem);
+  max-block-size: 92dvh;
+  inline-size: 100%;
+  padding: 0;
+  border: 1px solid var(--border);
+  background-color: var(--background);
+  color: var(--foreground);
+  overscroll-behavior: contain;
+}
+
+dialog.lightbox-dialog::backdrop {
+  background-color: oklch(0.1 0.005 50 / 82%);
+  backdrop-filter: blur(4px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog.lightbox-dialog {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.2s ease-out,
+      transform 0.2s ease-out,
+      display 0.2s allow-discrete,
+      overlay 0.2s allow-discrete;
+  }
+
+  dialog.lightbox-dialog[open] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @starting-style {
+    dialog.lightbox-dialog[open] {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+}
